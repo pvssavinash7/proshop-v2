@@ -1,15 +1,32 @@
 import React from 'react';                                                                                                                                                                                                                                      
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import{Link} from 'react-router-dom';
-import {Row, Col, Image, ListGroup, Card, Button} from 'react-bootstrap';
+import { Form,Row, Col, Image, ListGroup, Card, Button} from 'react-bootstrap';
 import Rating from '../components/Rating';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 import { useGetProductDetailsQuery } from '../slices/productsApiSlice';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../slices/cartSlice';
+
+
 
  
 const ProductScreen = () => {
     const {id: productId} = useParams();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const [ qty, setQty ] = useState(1);
+ 
     const {data: product, isLoading, error} = useGetProductDetailsQuery(productId);
+
+    const addToCartHandler = () => {
+        dispatch(addToCart({...product,qty}));
+        navigate('/cart');
+    }
+    
 
   return (
     <>
@@ -17,8 +34,10 @@ const ProductScreen = () => {
             Go Back
         </Link>
         { isLoading ? (
-            <h2>Loading...</h2>
-        ): error ? (<div>{ error?.data?.message || error.error }</div>) : (
+            <Loader />
+        ): error ? (<Message variant='danger'>
+        {error?.data?.message || error.error}
+      </Message>) : (
             <Row>
             <Col md={5}>
                 <Image src={product.image} alt={product.name} fluid />
@@ -32,7 +51,7 @@ const ProductScreen = () => {
                         <Rating value={product.rating} text={`${product.numReviews} reviews`} />
                     </ListGroup.Item>
                         <ListGroup.Item>
-                            Price: ${product.price} 
+                            Price: Rs.{product.price} 
                         </ListGroup.Item>
                         <ListGroup>Description: {product.description}</ListGroup>
                     
@@ -44,7 +63,7 @@ const ProductScreen = () => {
                         <ListGroup.Item>
                             <Row>
                                 <Col>Price:</Col>
-                                <Col><strong>${product.price}</strong></Col>
+                                <Col><strong>Rs.{product.price}</strong></Col>
                             </Row>
                         </ListGroup.Item>
                         <ListGroup.Item>
@@ -57,11 +76,32 @@ const ProductScreen = () => {
                                 </Col>
                             </Row>
                         </ListGroup.Item>
+                        {product.countInStock > 0 && (
+                            <ListGroup.Item>
+                                <Row>
+                                    <Col>Qty</Col>
+                                    <Col>
+                                    <Form.Control
+                                        as='select'
+                                        value={qty}
+                                        onChange={(e)=>setQty(Number(e.target.value))}>
+                                            {[...Array(50).keys()].map((x) =>(
+                                                <option key={x+1} value={x+1}>
+                                                    {x + 1}
+                                                </option>
+                                            ))}
+                                        </Form.Control>
+                                    </Col>
+                                </Row>
+                            </ListGroup.Item>
+                        )
+                        }
                         <ListGroup.Item>
                             <Button 
                             className='btn-block'
                             type='button'
                             disabled={product.countInStock === 0}
+                            onClick={addToCartHandler}
                             >
                                 Add to Cart
                             </Button>
@@ -77,5 +117,6 @@ const ProductScreen = () => {
         
     </>
 )};
+
 
 export default ProductScreen;
