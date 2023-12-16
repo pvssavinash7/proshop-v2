@@ -9,6 +9,8 @@ import Message from '../components/Message';
 import { useGetProductDetailsQuery } from '../slices/productsApiSlice';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../slices/cartSlice';
+// import { removeFromCart } from '../slices/cartSlice';
+// import { FaTrash } from 'react-icons/fa';
 
 
 
@@ -27,6 +29,9 @@ const ProductScreen = () => {
         navigate('/cart');
     }
     
+    // const removeFromCartHandler = async (id) => {
+    //     dispatch(removeFromCart(id));
+    // }
 
   return (
     <>
@@ -102,9 +107,16 @@ const ProductScreen = () => {
                             type='button'
                             disabled={product.countInStock === 0}
                             onClick={addToCartHandler}
+                            bg='black'
                             >
                                 Add to Cart
                             </Button>
+
+                            {/* <Col md={2}>
+                                    <Button marginLeft={10} type='button' variant='light ' onClick={() => removeFromCartHandler(product._id)}>
+                                        <FaTrash />
+                                    </Button>
+                                </Col> */}
 
                         </ListGroup.Item>
                     </ListGroup>
