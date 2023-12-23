@@ -12,7 +12,7 @@ const ShippingScreen = () => {
     const { shippingAddress } = cart; 
     const [address, setAddress] = useState(shippingAddress?.address || '');
     const [city, setCity] = useState(shippingAddress?.city || '');
-    const [pinCode, setPinCode] = useState(shippingAddress?.pinCode || '');
+    const [postalcode, setPostalCode] = useState(shippingAddress?.postalcode || '');
     const [country, setCountry] = useState(shippingAddress?.country || '');
 
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ const ShippingScreen = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveShippingAddress({address, city, pinCode, country}));
+        dispatch(saveShippingAddress({address, city, postalcode, country}));
         navigate('/payment');
     };
   return (
@@ -49,13 +49,13 @@ const ShippingScreen = () => {
                 onChange={(e) => setCity(e.target.value)} />
             </Form.Group>
 
-            <Form.Group controlId='pinCode' className='my-2'>
-                <Form.Label>Pin Code</Form.Label>
+            <Form.Group controlId='postalcode' className='my-2'>
+                <Form.Label>Postal Code</Form.Label>
                 <Form.Control
                 type='text'
-                placeholder='Pin code'
-                value={pinCode}
-                onChange={(e) => setPinCode(e.target.value)} />
+                placeholder='Postal Code'
+                value={postalcode}
+                onChange={(e) => setPostalCode(e.target.value)} />
             </Form.Group>
 
             <Form.Group controlId='country' className='my-2'>
