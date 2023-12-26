@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
-import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalClientIdQuery} from '../slices/ordersApiSlice';
+import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPayPalClientIdQuery, useDeliverOrderMutation } from '../slices/ordersApiSlice';
 
 
 
@@ -17,6 +17,8 @@ const OrderScreen = () => {
     const { data: order, refetch, isLoading, error } = useGetOrderDetailsQuery(orderId);
 
     const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+
+    const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
     
     const [ {isPending}, paypalDispatch ] = usePayPalScriptReducer();
 
@@ -79,6 +81,15 @@ const OrderScreen = () => {
         });
     }
 
+  const deliverOrderHandler = async () => {
+    try { 
+        await deliverOrder(orderId);
+        refetch();
+        toast.success('Order delivered');
+    } catch (err) {
+        toast.error(err?.data?.message || err.message);
+    }
+  }
 
     
 
@@ -199,8 +210,16 @@ const OrderScreen = () => {
                     </ListGroup.Item>
                 )}
 
+                { loadingDeliver && <Loader />}
 
-                {/*MARK AS DELIVERED PLACEORDER */}
+                { userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                    <ListGroup.Item>
+                        <Button type='button' className='btn btn-block'
+                        onClick={deliverOrderHandler}>
+                            Mark As Delivered
+                        </Button>
+                    </ListGroup.Item>
+                )}
             </ListGroup>
             </Card>
         </Col>
