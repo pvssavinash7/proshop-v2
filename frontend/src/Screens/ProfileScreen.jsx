@@ -127,7 +127,7 @@ const ProfileScreen = () => {
                         {orders.map((order) => (
                             <tr key={order._id}>
                                 <td>{order._id}</td>
-                                <td>{order.createdAt.substring(0,10)}</td>
+                                <td>{order.createdAt ? order.createdAt.substring(0,10) : 'N/A'}</td>
                                 <td>Rs.{order.totalPrice}</td>
                                 <td>
                                     { order.isPaid ? (
@@ -137,9 +137,9 @@ const ProfileScreen = () => {
                                     )}
                                 </td>
                                 <td>
-                                    { order.isDelivered ? (
-                                        order.DeliveredAt.substring(0,10)
-                                    ) : (
+                                {order.isDelivered?(
+                                'Delivered'
+                            ):(
                                         <FaTimes style={{ color: 'red'}} />
                                     )}
                                 </td>

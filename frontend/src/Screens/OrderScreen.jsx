@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap';
+import { Row, Col, ListGroup, Image, Button, Card } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import Message from '../components/Message';
@@ -22,9 +22,14 @@ const OrderScreen = () => {
     
     const [ {isPending}, paypalDispatch ] = usePayPalScriptReducer();
 
+
     const {data: paypal, isLoading: loadingPayPal, error:errorPayPal } = useGetPayPalClientIdQuery();
 
-    const userInfo = useSelector((state) => state.auth);
+    const {userInfo} = useSelector((state) => state.auth);
+    // const {userInfo} = useradmin
+
+    
+
 
     useEffect(() => {
         if (!errorPayPal && !loadingPayPal && paypal.clientId) {
@@ -90,7 +95,7 @@ const OrderScreen = () => {
         toast.error(err?.data?.message || err.message);
     }
   }
-
+console.log(userInfo)
     
 
   return isLoading ? <Loader /> : error ? <Message variant='danger' /> : (
@@ -114,7 +119,7 @@ const OrderScreen = () => {
                     </p>
                     {order.isDelivered ? (
                         <Message variant='success'>
-                            Delivered on { order.deliveredAt }
+                            Delivered
                         </Message>
                     ) : (
                         <Message variant='danger'>Not Delivered</Message>
@@ -209,7 +214,7 @@ const OrderScreen = () => {
                         )}
                     </ListGroup.Item>
                 )}
-
+                
                 { loadingDeliver && <Loader />}
 
                 { userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
