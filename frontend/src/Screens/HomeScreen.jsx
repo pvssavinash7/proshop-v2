@@ -6,6 +6,7 @@ import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Paginate from '../components/Paginate';
+import Meta from '../components/Meta';
 import { useGetProductsQuery } from '../slices/productsApiSlice';
 import ProductCarousel from '../components/ProductCarousel';
 
@@ -23,6 +24,7 @@ const HomeScreen = () => {
         {error?.data?.message || error.error}
       </Message>): (<>
         <h1>
+          <Meta />
         Latest Products
     </h1>
     <Row>
