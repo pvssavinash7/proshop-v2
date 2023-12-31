@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Carousel, Image } from 'react-bootstrap';
-import Loader from './Loader';
+// import Loader from './Loader';
 import Message from './Message';
 import { useGetTopProductsQuery } from '../slices/productsApiSlice';
 
@@ -12,7 +12,7 @@ const ProductCarousel = () => {
     //     return <Message variant='danger'>Invalid product data</Message>;
     // }
 
-  return isLoading ? <Loader /> : error ? <Message variant='danger'>{error}</Message>
+  return isLoading ? ('') : error ? <Message variant='danger'>{error}</Message>
   : (
     <Carousel pause='hover' className='bg-primary mb-4'>
         {products.map((product) => (

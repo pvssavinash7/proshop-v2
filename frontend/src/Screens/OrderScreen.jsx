@@ -26,7 +26,7 @@ const OrderScreen = () => {
     const {data: paypal, isLoading: loadingPayPal, error:errorPayPal } = useGetPayPalClientIdQuery();
 
     const {userInfo} = useSelector((state) => state.auth);
-    // const {userInfo} = useradmin
+
 
     
 
@@ -191,7 +191,7 @@ console.log(userInfo)
                         <Col>Rs.{order.totalPrice}</Col>
                     </Row>
                 </ListGroup.Item>
-                {!order.isPaid && (
+                {!order.isPaid &&  (
                     <ListGroup.Item>
                         {loadingPay && <Loader />}
 
@@ -199,16 +199,18 @@ console.log(userInfo)
                         <Loader />
                         ) : (
                             <div>
-                                <Button onClick={onApproveTest} style={{marginBottom:'10px'}}>
-                                    Test Pay Order
+                                
+                                <Button onClick={onApproveTest} style={{marginBottom:'10px'}} disabled={!userInfo.isAdmin}>
+                                    Pay
                                 </Button>
-                                <div>
+
+                                {/* <div>
                                     <PayPalButtons
                                     createOrder={createOrder}
                                     onApprove={onApprove}
                                     onError={onError}
                                     ></PayPalButtons>
-                                </div>
+                                </div> */}
                             </div>
                             
                         )}

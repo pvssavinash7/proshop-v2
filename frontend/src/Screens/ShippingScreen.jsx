@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import FormContainer from '../components/FormContainer';
 import { saveShippingAddress } from '../slices/cartSlice';
+import { toast } from 'react-toastify';
 import CheckoutSteps from '../components/CheckoutSteps';
 
 const ShippingScreen = () => {
@@ -14,7 +15,6 @@ const ShippingScreen = () => {
     const [city, setCity] = useState(shippingAddress?.city || '');
     const [postalcode, setPostalCode] = useState(shippingAddress?.postalcode || '');
     const [country, setCountry] = useState(shippingAddress?.country || '');
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -22,6 +22,11 @@ const ShippingScreen = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        if (!address || !city || !postalcode || !country) 
+        // Display toast message for unfilled fields
+        toast.error('Please fill in all fields', {
+            position: toast.POSITION.TOP_CENTER,
+        });
         dispatch(saveShippingAddress({address, city, postalcode, country}));
         navigate('/payment');
     };

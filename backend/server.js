@@ -38,6 +38,8 @@ const __dirname = path.resolve();  // Set __dirname to current directory
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use('/search/:keyword/uploads/', express.static(path.join(__dirname, '/uploads')));
 app.use('/products/uploads', express.static(path.join(__dirname, '/uploads')));
+app.use('/order/uploads', express.static(path.join(__dirname, '/uploads')));
+
 
 if (process.env.NODE_ENV === 'production') {
 
