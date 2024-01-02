@@ -41,6 +41,8 @@ app.use('/products/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use('/order/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use('/page/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use('/search/uploads', express.static(path.join(__dirname, '/uploads')));
+app.use('/search/:keyword/page/uploads', express.static(path.join(__dirname, '/uploads')));
+
 
 
 
@@ -66,4 +68,4 @@ if (process.env.NODE_ENV === 'production') {
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(port, () => console.log(`Server running on the ${port}`))
+app.listen(port, () => console.log(`Server running on the ${port}`));

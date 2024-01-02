@@ -34,7 +34,9 @@ const ProductScreen = () => {
 
     const addToCartHandler = () => {
         dispatch(addToCart({...product,qty}));
-        navigate('/cart');
+        // navigate('/cart');
+        // navigate('/');
+        toast.success('Product added to cart');
     }
 
     const submitHandler = async (e) => {
