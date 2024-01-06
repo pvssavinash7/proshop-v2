@@ -41,8 +41,7 @@ const HomeScreen = () => {
           keyword={keyword ? keyword : ''}
           />
           </>)}
-    
-    </>
+    </> 
   )
 }
 
