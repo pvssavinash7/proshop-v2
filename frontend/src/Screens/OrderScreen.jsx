@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Button, Card } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -95,6 +95,42 @@ const OrderScreen = () => {
         toast.error(err?.data?.message || err.message);
     }
   }
+
+//   const handleCheckboxChange = () => {
+//     const checkbox = document.getElementById('myCheckbox');
+//     if (checkbox.checked) {
+//         window.alert('Add ?');
+//     }
+//     else {
+//         window.alert('Remove ?');
+//     }
+// };
+
+// const [isChecked, setIsChecked] = useState(false); // State to track checkbox status
+
+const [isChecked, setIsChecked] = useState(() => {
+    const storedValue = localStorage.getItem('isChecked');
+    console.log('Stored value:', storedValue); // Debugging: Check stored value
+    return storedValue ? JSON.parse(storedValue) : false;
+});
+
+useEffect(() => {
+    localStorage.setItem('isChecked', JSON.stringify(isChecked));
+    console.log('Checkbox state saved:', isChecked); // Debugging: Check if checkbox state is saved
+}, [isChecked]);
+
+const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+    if (e.target.checked) {
+        window.alert('Add ?');
+    } else {
+        window.alert('Remove ?');
+    }
+};
+  
+
+
+
 console.log(userInfo)
     
 
@@ -157,7 +193,12 @@ console.log(userInfo)
                                     {item.qty} x Rs.{item.price} = Rs.{item.qty * item.price}
                                 </Col>
                                 <Col>
+                                <label class="switch">
+                                <input type="checkbox" id="myCheckbox" onChange={handleCheckboxChange} disabled={!userInfo.isAdmin}/>
+                                <span class="slider round"></span>
+                                </label>
                                 </Col>
+                                
                             </Row>
                         </ListGroup.Item>
                     ))}
