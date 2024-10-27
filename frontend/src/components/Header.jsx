@@ -43,7 +43,7 @@ const Header = () => {
                 <Navbar.Collapse id='basic-navbar-nav'>
                     <Nav className='ms-auto'>
                         <SearchBox />
-                        <LinkContainer to='/Cart'>
+                        <LinkContainer to='/Cart'> 
                             <Nav.Link>
                                 <FaShoppingCart />Cart
                                 {cartItems.length > 0 && (
