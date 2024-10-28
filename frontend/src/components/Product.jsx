@@ -5,6 +5,7 @@ import Rating from './Rating';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { addToCart } from '../slices/cartSlice';
+import {FaCartPlus} from 'react-icons/fa';
 import { useState } from 'react';
 
 
@@ -65,7 +66,7 @@ const Product = ({product}) => {
                             onClick={addToCartHandler}
                             bg='black'
                             >
-                                Cart
+                               <FaCartPlus/> 
                             </Button>
                         </ListGroup.Item>   
                                         
