@@ -63,7 +63,7 @@ const ProductEditScreen = () => {
             toast.error(result.error);
         } else { 
             toast.success('Product Updated');
-            navigate('/admin/productlist');
+            // navigate('/admin/productlist');
         }
     };
 
@@ -175,3 +175,5 @@ const ProductEditScreen = () => {
 }
 
 export default ProductEditScreen
+
+
